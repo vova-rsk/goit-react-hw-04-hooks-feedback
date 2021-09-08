@@ -26,7 +26,7 @@ const App = () => {
     ? 0
     : Math.round((stats[TARGET_OPTION] / totalFeedbacks) * 100);
 
-  /*method for adding current feedback*/
+  /*function for adding current feedback*/
   const incrementStats = e => {
     const statName = e.target.dataset.name;
     setStats({ ...stats, [statName]: stats[statName] + 1 });
