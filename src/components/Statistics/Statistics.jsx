@@ -1,30 +1,21 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from './Statistics.styled';
 
-const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
+const Statistics = props => {
+  const statsItems = Object.keys(props);
   return (
     <List>
-      <li>
-        <span>Good:</span>
-        <span>{good}</span>
-      </li>
-      <li>
-        <span>Neutral:</span>
-        <span>{neutral}</span>
-      </li>
-      <li>
-        <span>Bad:</span>
-        <span>{bad}</span>
-      </li>
-      <li>
-        <span>Total:</span>
-        <span>{total}</span>
-      </li>
-      <li>
-        <span>Positive feedback:</span>
-        <span>{positivePercentage}%</span>
-      </li>
+      {statsItems.map((item, idx, arr) => {
+        const title = item[0].toUpperCase() + item.slice(1);
+        const value = [props[item], idx !== arr.length - 1 ? '' : '%'].join('');
+
+        return (
+          <li key={idx}>
+            <span>{title}:</span>
+            <span>{value}</span>
+          </li>
+        );
+      })}
     </List>
   );
 };
@@ -32,9 +23,5 @@ const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
 export default Statistics;
 
 Statistics.propTypes = {
-  good: PropTypes.number,
-  neutral: PropTypes.number,
-  bad: PropTypes.number,
-  total: PropTypes.number,
-  positivePercentage: PropTypes.number,
+  props: PropTypes.objectOf(PropTypes.number),
 };
