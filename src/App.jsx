@@ -5,7 +5,7 @@ import Statistics from './components/Statistics';
 import Notification from './components/Notification';
 import { Container } from './App.styled';
 
-const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad', 'smthElse'];
+const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad', 'smthElse1', 'smthElse2'];
 const TARGET_OPTION = 'good';
 
 /*
@@ -29,7 +29,7 @@ const App = () => {
   /*function for adding current feedback*/
   const incrementStats = e => {
     const statName = e.target.dataset.name;
-    setStats({ ...stats, [statName]: stats[statName] + 1 });
+    setStats(prevState => ({ ...prevState, [statName]: stats[statName] + 1 }));
   };
 
   return (
