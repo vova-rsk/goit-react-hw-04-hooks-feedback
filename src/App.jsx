@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import Section from './components/Section';
 import FeedbackOptions from './components/FeedbackOptions';
 import Statistics from './components/Statistics';
@@ -8,28 +8,32 @@ import { Container } from './App.styled';
 const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad', 'smthElse1', 'smthElse2'];
 const TARGET_OPTION = 'good';
 
+const feedbackReducer = (state, action) => {
+  return { ...state, [action.type]: state[action.type] + action.playload };
+};
+
 /*
  *  The functioning of the component is based on the specified feedback-options array and
  *  the target element from the specified array, for which statistics will be calculated
  */
 const App = () => {
-  const [stats, setStats] = useState(() =>
-    FEEDBACK_OPTIONS.reduce((acc, stat) => ({ ...acc, [stat]: 0 }), {}),
+  const [state, dispatch] = useReducer(feedbackReducer, {}, () =>
+    FEEDBACK_OPTIONS.reduce((acc, option) => ({ ...acc, [option]: 0 }), {}),
   );
 
-  const options = Object.keys(stats);
-  const totalFeedbacks = Object.values(stats).reduce(
+  const options = Object.keys(state);
+  const totalFeedbacks = Object.values(state).reduce(
     (acc, elem) => acc + elem,
     0,
   );
-  const positivePercentage = !stats[TARGET_OPTION]
+  const positivePercentage = !state[TARGET_OPTION]
     ? 0
-    : Math.round((stats[TARGET_OPTION] / totalFeedbacks) * 100);
+    : Math.round((state[TARGET_OPTION] / totalFeedbacks) * 100);
 
   /*function for adding current feedback*/
   const incrementStats = e => {
-    const statName = e.target.dataset.name;
-    setStats(prevState => ({ ...prevState, [statName]: stats[statName] + 1 }));
+    const option = e.target.dataset.name;
+    dispatch({ type: option, playload: 1 });
   };
 
   return (
@@ -40,7 +44,7 @@ const App = () => {
       {totalFeedbacks ? (
         <Section title="Statistics">
           <Statistics
-            {...stats}
+            {...state}
             total={totalFeedbacks}
             positivePercentage={positivePercentage}
           />
