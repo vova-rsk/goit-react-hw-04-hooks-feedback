@@ -5,7 +5,7 @@ import Statistics from './components/Statistics';
 import Notification from './components/Notification';
 import { Container } from './App.styled';
 
-const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad', 'smthElse1', 'smthElse2'];
+const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad'];
 const TARGET_OPTION = 'good';
 
 /*function for useReducer*/
