@@ -8,6 +8,7 @@ import { Container } from './App.styled';
 const FEEDBACK_OPTIONS = ['good', 'neutral', 'bad', 'smthElse1', 'smthElse2'];
 const TARGET_OPTION = 'good';
 
+/*function for useReducer*/
 const feedbackReducer = (state, action) => {
   return { ...state, [action.type]: state[action.type] + action.playload };
 };
